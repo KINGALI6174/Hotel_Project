@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hotel.Domain.Entities.Web;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.Infrastructuer.DbContext
@@ -14,5 +15,7 @@ namespace Hotel.Infrastructuer.DbContext
         {
 
         }
+
+        public DbSet<FirstBaner> FirstBaners { get; set; }
     }
 }

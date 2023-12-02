@@ -7,6 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap\.github\CODEOWNERS" />
+    <None Include="wwwroot\lib\bootstrap\.github\codeql\codeql-config.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\bootstrap\.github\dependabot.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\ISSUE_TEMPLATE\bug_report.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\ISSUE_TEMPLATE\config.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\ISSUE_TEMPLATE\feature_request.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\PULL_REQUEST_TEMPLATE.md" />
+    <None Include="wwwroot\lib\bootstrap\.github\release-drafter.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\SUPPORT.md" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\browserstack.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\bundlewatch.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\calibreapp-image-actions.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\cspell.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\css.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\docs.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\issue-close-require.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\issue-labeled.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\js.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\lint.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\node-sass.yml" />
+    <None Include="wwwroot\lib\bootstrap\.github\workflows\release-notes.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
       <PrivateAssets>all</PrivateAssets>
