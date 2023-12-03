@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Hotel.Domain.Entities.Web
+
+@model List<FirstBaner>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,33 +9,23 @@
 
 <div class="container">
     <div class="row baner-section  align-items-center justify-content-center">
-        <div class="col-md-12 col-lg-6 position-relative baner">
-            <div class="px-5 tiny-baner">
-                <div class="img-section rounded-4">
-                    <img src="img/mini-right-baner.jpg" alt="right-baner">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-12 col-lg-6 position-relative baner">
+                <div class="px-5 tiny-baner">
+                    <div class="img-section rounded-4">
+                        <img src="img/@(item.ImageName).jpg" alt="right-baner">
+                    </div>
+                </div>
+                <div class="position-absolute text-baner text-center">
+                    <p class="text-dark fs-4 fw-600 baner-title">
+                       @item.banerTitle
+                    </p>
+                    <button class="btn w-75 btn-danger">@item.banerBotton</button>
                 </div>
             </div>
-            <div class="position-absolute text-baner text-center">
-                <p class="text-dark fs-4 fw-600 baner-title">
-                    همین حالا خرید کنید
-                    20% تخفیف بگیرید
-                </p>
-                <button class="btn w-75 btn-danger">رزرو هتل</button>
-            </div>
-        </div>
-        <div class="col-md-12 col-lg-6 position-relative baner">
-            <div class="px-5 tiny-baner ">
-                <div class="img-section rounded-4">
-                    <img src="img/left-mini-banner.jpg" alt="left-baner">
-                </div>
-            </div>
-            <div class="position-absolute text-baner text-center ">
-                <p class="text-white fs-4 fw-600 baner-title">
-                    با خرید یک بلیط 50% تخفیف بگیرید
-                </p>
-                <button class="btn w-75 btn-danger">خرید بلیط</button>
-            </div>
-        </div>
+        }
+        
     </div>
 </div>
 

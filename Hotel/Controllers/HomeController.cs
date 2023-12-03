@@ -1,21 +1,25 @@
 ﻿using Hotel.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Hotel.Infrastructuer.DbContext;
 
 namespace Hotel.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly HotelDbContext _Context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, HotelDbContext hotelDbContext)
         {
             _logger = logger;
+            _Context = hotelDbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var baner = _Context.FirstBaners.ToList();
+            return View(baner);
         }
 
         public IActionResult Privacy()
