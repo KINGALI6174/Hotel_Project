@@ -1,3 +1,6 @@
+using Hotel.Infrastructuer.DbContext;
+using Microsoft.EntityFrameworkCore;
+
 namespace Hotel
 {
     public class Program
@@ -8,6 +11,7 @@ namespace Hotel
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<HotelDbContext>();
 
             var app = builder.Build();
 
@@ -26,10 +30,19 @@ namespace Hotel
 
             app.UseAuthorization();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
+
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            
             app.Run();
         }
     }
