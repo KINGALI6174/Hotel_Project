@@ -17,5 +17,6 @@ namespace Hotel.Infrastructuer.DbContext
         }
 
         public DbSet<FirstBaner> FirstBaners { get; set; }
+        public DbSet<Ali> Ali { get; set; }
     }
 }
