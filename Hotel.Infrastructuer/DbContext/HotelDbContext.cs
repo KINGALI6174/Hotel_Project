@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Elfie.Serialization;
 using Hotel.Domain.Entities;
+using Hotel.Domain.Entities.Account;
 using Hotel.Domain.Entities.Web;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -20,6 +22,6 @@ namespace Hotel.Infrastructuer.DbContext
         }
 
         public DbSet<FirstBaner> FirstBaners { get; set; }
-        public DbSet<Ali> Ali { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

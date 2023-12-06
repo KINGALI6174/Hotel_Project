@@ -19,6 +19,7 @@ namespace Hotel.Controllers
         public IActionResult Index()
         {
             var baner = _Context.FirstBaners.ToList();
+            TempData["MainPage"] = "MainPage";
             return View(baner);
         }
 
