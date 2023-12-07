@@ -1,5 +1,8 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Hotel.Infrastructuer.DbContext;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 
 namespace Hotel
 {
@@ -8,6 +11,22 @@ namespace Hotel
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions
+            {
+                ProgressBar = true,
+                Timeout = 5000
+            });
+
+            // Add ToastNotification
+            builder.Services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 5;
+                config.IsDismissable = true;
+                config.Position = NotyfPosition.TopRight;
+            });
+
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -29,6 +48,8 @@ namespace Hotel
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseNToastNotify();
+            app.UseNotyf();
 
             app.UseEndpoints(endpoints =>
             {
@@ -42,7 +63,7 @@ namespace Hotel
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            
+
             app.Run();
         }
     }

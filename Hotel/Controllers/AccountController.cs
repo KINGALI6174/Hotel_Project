@@ -1,11 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Hotel.Application.DTOs.SiteSide.UserRegister;
+using Hotel.Domain.Entities.Account;
+using Hotel.Infrastructuer.DbContext;
+using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 
 namespace Hotel.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IToastNotification _toast;
+        private readonly INotyfService _toastNotification;
+        private readonly HotelDbContext _context;
+
+        public AccountController(IToastNotification toast, INotyfService toastNotification, HotelDbContext context)
+        {
+            _toast = toast;
+            _toastNotification = toastNotification;
+            _context = context;
+        }
         public IActionResult Register()
         {
+            return View();
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult Register(UserRegisterDTO UserDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                Domain.Entities.Account.User user = new User()
+                {
+                    Email = UserDTO.Email,
+                    Password = UserDTO.Password,
+                };
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+                _toast.AddSuccessToastMessage("ثبت نام با موفقیت انجام شد");
+               //_toastNotification.Success("he");
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
     }

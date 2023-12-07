@@ -10,18 +10,22 @@
 </head>
 
 <body>
-    @if (TempData["Mainpage"] != null)
+    @if (TempData["MainPage"] != null)
     {
         <partial name="_PartialHeader" />
     }
     else
     {
-        <partial name="_partialSecondHeader"/>
+        <partial name="_partialSecondHeader" />
     }
-    
+
     @RenderBody()
     <partial name="_PartialFooter" />
 
     <script src="/js/bootstrap.bundle.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+    @await Component.InvokeAsync("Notyf")
+
 </body>
 </html>

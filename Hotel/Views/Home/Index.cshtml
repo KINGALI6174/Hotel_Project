@@ -1,4 +1,4 @@
-﻿@using Hotel.Domain.Entities.Web
+﻿@*@using Hotel.Domain.Entities.Web
 
 @model List<FirstBaner>
 @{
@@ -6,8 +6,7 @@
 }
 
 <!-- Baner-section -->
-
-<div class="container">
+@*<div class="container">
     <div class="row baner-section  align-items-center justify-content-center">
         @foreach (var item in Model)
         {
@@ -25,9 +24,36 @@
                 </div>
             </div>
         }
-        
+
+    </div>
+</div>*@
+
+
+<div class="container">
+    <div class="row baner-section  align-items-center justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-12 col-lg-6 position-relative baner">
+                <div class="px-5 tiny-baner">
+                    <div class="img-section rounded-4">
+                        <img src="img/@(item.ImageName).jpg" alt="right-baner">
+                    </div>
+                </div>
+                <div class="position-absolute text-baner text-center">
+                    <p class="text-dark fs-4 fw-600 baner-title">
+                      @item.banerTitle
+                    </p>
+                    <button class="btn w-75 btn-danger">@item.banerBotton</button>
+                </div>
+            </div>
+        }
     </div>
 </div>
+
+
+
+
+
 
 <!--End Baner-section -->
 <!-- info Section -->
