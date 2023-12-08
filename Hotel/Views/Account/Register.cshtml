@@ -10,16 +10,51 @@
                     <div class="px-4">
                         <h5>ثبت نام</h5>
                         <form class="pt-4 login-form" method="post" asp-controller="Account" asp-action="Register">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3 form-group ">
+                                        <input type="text" asp-for="FName" class="form-control text-start"
+                                               placeholder="نام خود را وارد کنید">
+                                    </div>
+                                <span style="color: red" asp-validation-for="FName"></span>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3 form-group ">
+                                        <input type="text" asp-for="LName" class="form-control text-start"
+                                               placeholder="نام خانوادگی خود را وارد کنید">
+                                    </div>
+                                <span style="color: red" asp-validation-for="LName"></span>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-3 form-group ">
+                                    <input type="tel" asp-for="NationalCode" class="form-control text-start"
+                                           placeholder="شماره ملی خود را وارد کنید">
+                                </div>
+                                <span style="color: red" asp-validation-for="NationalCode"></span>
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3 form-group ">
+                                    <input type="tel" asp-for="PhoneNumber" class="form-control text-start"
+                                           placeholder="شماره موبایل خود را وارد کنید">
+                                </div>
+                                <span style="color: red" asp-validation-for="PhoneNumber"></span>
+                            </div>
+                        </div>
                             <div class="mb-3 form-group ">
                                 <input type="email" asp-for="Email" class="form-control text-start"
                                        placeholder="ایمیل خود را وارد کنید">
                             </div>
+                        <span style="color: red" asp-validation-for="Email"></span>
                             <div class="mb-4">
                                 <input asp-for="Password" type="password" class="form-control text-start" placeholder="کلمه عبور">
                             </div>
+                        <span style="color: red" asp-validation-for="Password"></span>
                             <div class="mb-4">
                                 <input asp-for="RePassword" type="password" class="form-control text-start" placeholder=" تکرار کلمه عبور">
                             </div>
+                        <span style="color: red" asp-validation-for="RePassword"></span>
                             <span style="color: red" asp-validation-for="RePassword"></span>
                             <div class="row justify-content-between">
                                 <div class="form-check ms-3 col-4 ">

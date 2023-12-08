@@ -34,6 +34,10 @@ namespace Hotel.Controllers
                 {
                     Domain.Entities.Account.User user = new User()
                     {
+                        FName = UserDTO.FName,
+                        LName = UserDTO.LName,
+                        NationalCode = UserDTO.NationalCode,
+                        PhoneNumber = UserDTO.PhoneNumber,
                         Email = UserDTO.Email.Trim(),
                         Password = PasswordHelper.EncodePasswordMd5(UserDTO.Password),
                     };

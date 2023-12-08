@@ -13,11 +13,21 @@ namespace Hotel.Domain.Entities.Account
         public int ID { get; set; }
 
         [Display(Name = "نام")]
-        public string? FName { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید.")]
+        public string FName { get; set; }
 
 
         [Display(Name = "نام خانوادگی")]
-        public string? LName { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید.")]
+        public string LName { get; set; }
+
+        [Display(Name = "شماره ملی")]
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید.")]
+        public string NationalCode { get; set; }
+
+        [Display(Name = "شماره موبایل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید.")]
+        public string PhoneNumber { get; set; }
 
 
         [Display(Name = "ایمیل")]
