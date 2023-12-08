@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Hotel.Application.DTOs.SiteSide.UserRegister;
+using Hotel.Application.Security;
 using Hotel.Domain.Entities.Account;
 using Hotel.Infrastructuer.DbContext;
 using Microsoft.AspNetCore.Mvc;
@@ -24,22 +25,28 @@ namespace Hotel.Controllers
             return View();
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Register(UserRegisterDTO UserDTO)
         {
             if (ModelState.IsValid)
             {
-                Domain.Entities.Account.User user = new User()
+                if (_context.Users.Any(u => u.Email == UserDTO.Email.Trim()) == false)
                 {
-                    Email = UserDTO.Email,
-                    Password = UserDTO.Password,
-                };
-                _context.Users.Add(user);
-                _context.SaveChanges();
+                    Domain.Entities.Account.User user = new User()
+                    {
+                        Email = UserDTO.Email.Trim(),
+                        Password = PasswordHelper.EncodePasswordMd5(UserDTO.Password),
+                    };
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
 
-                _toast.AddSuccessToastMessage("ثبت نام با موفقیت انجام شد");
-               //_toastNotification.Success("he");
-                return RedirectToAction("Index", "Home");
+                    //_toast.AddSuccessToastMessage("ثبت نام با موفقیت انجام شد");
+                    _toastNotification.Success("ثبت نام با موفقیت انجام شد .");
+                    //_toastNotification.Success("he");
+                    return RedirectToAction("Index", "Home");
+                }
+                //_toast.AddErrorToastMessage("این ایمیل قبلا ثبت نام شده است .");
+                _toastNotification.Error("  این ایمیل قبلا ثبت نام شده است .");
             }
             return View();
         }
