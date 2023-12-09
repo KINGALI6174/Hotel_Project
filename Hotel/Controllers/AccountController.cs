@@ -1,8 +1,12 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using System.Security.Claims;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Hotel.Application.DTOs.SiteSide.UserLogin;
 using Hotel.Application.DTOs.SiteSide.UserRegister;
 using Hotel.Application.Security;
 using Hotel.Domain.Entities.Account;
 using Hotel.Infrastructuer.DbContext;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
@@ -10,6 +14,7 @@ namespace Hotel.Controllers
 {
     public class AccountController : Controller
     {
+        #region Ctor
         private readonly IToastNotification _toast;
         private readonly INotyfService _toastNotification;
         private readonly HotelDbContext _context;
@@ -20,6 +25,10 @@ namespace Hotel.Controllers
             _toastNotification = toastNotification;
             _context = context;
         }
+
+        #endregion
+
+        #region Register
         public IActionResult Register()
         {
             return View();
@@ -30,7 +39,7 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_context.Users.Any(u => u.Email == UserDTO.Email.Trim()) == false)
+                if (_context.Users.Any(u => u.NationalCode == UserDTO.NationalCode.Trim()) == false)
                 {
                     Domain.Entities.Account.User user = new User()
                     {
@@ -50,9 +59,73 @@ namespace Hotel.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 //_toast.AddErrorToastMessage("این ایمیل قبلا ثبت نام شده است .");
-                _toastNotification.Error("  این ایمیل قبلا ثبت نام شده است .");
+                _toastNotification.Error("کاربر با این کد ملی قبلا ثبت نام شده است .");
             }
             return View();
         }
+
+        #endregion
+
+
+        #region Login
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserLoginDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                #region Find User
+                var user = _context.Users.FirstOrDefault(u => u.NationalCode == model.NationalCode.Trim()
+                                                              && u.Password == PasswordHelper.EncodePasswordMd5(model.Password));
+                if (user == null)
+                {
+                    _toastNotification.Error("مشخصات وارد شده صحیح نمی باشد");
+                    return View("Login");
+                }
+                #endregion
+
+                #region setting cooki
+
+                var claims = new List<Claim>
+                {
+                    new (ClaimTypes.NameIdentifier, user.ID.ToString()),
+                    new (ClaimTypes.Name, user.NationalCode),
+                };
+
+                var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(claimIdentity);
+
+                var authProps = new AuthenticationProperties();
+                authProps.IsPersistent = model.RememberMe;
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
+                _toastNotification.Information("ورود با موفقیت انجام شد");
+
+                return RedirectToAction("Index", "Home");
+
+                #endregion
+            }
+            return View();
+        }
+
+        #endregion
+
+
+        #region Logout
+
+        public async Task<IActionResult> logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+        }
+
+        #endregion
+
+
     }
 }

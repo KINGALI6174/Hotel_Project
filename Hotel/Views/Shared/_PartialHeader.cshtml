@@ -26,12 +26,22 @@
                         </li>
                     </ul>
                     <div class="">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-controller="Account" asp-action="Logout" class="btn btn-danger rounded-pill mt-2">
+                                خروج
+                            </a>
+                            <a href="bascket.html" class="btn btn-danger rounded-pill mt-2 ms-3">
+                                سبد خرید <i class="bi bi-basket ps-2 "></i>
+                            </a>
+                        }
+                        else
+                        {
                         <a asp-controller="Account" asp-action="Register" class="btn btn-danger rounded-pill mt-2">
                             ورود / ثبت نام
                         </a>
-                        <a href="bascket.html" class="btn btn-danger rounded-pill mt-2 ms-3">
-                            سبد خرید <i class="bi bi-basket ps-2 "></i>
-                        </a>
+                        }
+                        
                     </div>
                 </div>
             </nav>
