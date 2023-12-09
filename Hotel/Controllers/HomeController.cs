@@ -19,13 +19,11 @@ namespace Hotel.Controllers
         public IActionResult Index()
         {
             var baner = _Context.FirstBaners.ToList();
+            TempData["MainPage"] = "MainPage";
             return View(baner);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
