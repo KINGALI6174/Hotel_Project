@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hotel.Domain.Entities.Web;
 using Hotel.Infrastructuer.DbContext;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
+    [Authorize]
     public class FirstBanersController : Controller
     {
         private readonly HotelDbContext _context;

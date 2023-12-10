@@ -134,9 +134,9 @@ namespace Hotel.Controllers
             if (User.Identity.IsAuthenticated)
             {
             return View();
-                
             }
-            return View();
+            _toastNotification.Warning("لطفا ابتدا وارد شوید");
+            return RedirectToAction("Login");
         }
 
         #endregion
