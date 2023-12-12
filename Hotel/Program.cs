@@ -2,6 +2,7 @@ using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Hotel.Infrastructuer.DbContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 
@@ -32,6 +33,19 @@ namespace Hotel
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<HotelDbContext>();
+            //builder.Services.AddAuthentication()
+            //    .AddFacebook(option =>
+            //    {
+            //        option.AppId = "Test";
+            //        option.AppSecret = "Test";
+            //    })
+            //    .AddGoogle(option =>
+            //    {
+            //        option.ClientId = "Test";
+            //        option.ClientSecret = "Test";
+            //    });
+
+            
 
             #region Authentication
 
@@ -70,10 +84,10 @@ namespace Hotel
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseAuthentication();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseNToastNotify();
             app.UseNotyf();

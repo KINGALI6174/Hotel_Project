@@ -1,4 +1,6 @@
-﻿@model Hotel.Application.DTOs.SiteSide.UserLogin.UserLoginDTO
+﻿@using Microsoft.AspNetCore.Identity
+@model Hotel.Application.DTOs.SiteSide.UserLogin.UserLoginDTO
+@*@inject SignInManager<IdentityUser> SignInManager*@
 
 <main>
     <div class="container">
@@ -43,6 +45,29 @@
                             <p>آیا حساب کاربری ندارید؟ <a href="#" class="register-link ">ثبت نام کنید </a></p>
                         </div>
                     </div>
+                    @*@{
+                        var schemes = await SignInManager.GetExternalAuthenticationSchemesAsync();
+                        var loginProvider = schemes.ToList();
+                    }
+                    @if (loginProvider.Count() > 0)
+                    {
+                        <div class="col-md-4">
+                            <section>
+                                <h4> User Another service To Login </h4>
+                                <form asp-controller="Account" asp-action="ExtenalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form">
+                                    <div>
+                                        <p>
+                                            @foreach (var provider in loginProvider)
+                                            {
+                                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name"
+                                                        title="log in user your @provider.Name account"></button>
+                                            }
+                                        </p>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                    }*@
                 </div>
             </div>
         </div>

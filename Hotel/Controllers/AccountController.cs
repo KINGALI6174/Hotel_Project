@@ -7,6 +7,8 @@ using Hotel.Domain.Entities.Account;
 using Hotel.Infrastructuer.DbContext;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
@@ -18,6 +20,8 @@ namespace Hotel.Controllers
         private readonly IToastNotification _toast;
         private readonly INotyfService _toastNotification;
         private readonly HotelDbContext _context;
+        //private readonly SignInManager<IdentityUser> _signInManager;
+        //private readonly UserManager<IdentityUser> _userManager;
 
         public AccountController(IToastNotification toast, INotyfService toastNotification, HotelDbContext context)
         {
@@ -94,7 +98,7 @@ namespace Hotel.Controllers
                 var claims = new List<Claim>
                 {
                     new (ClaimTypes.NameIdentifier, user.ID.ToString()),
-                    new (ClaimTypes.Name, user.FName),
+                    new (ClaimTypes.Name, user.NationalCode),
                 };
 
                 var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -138,6 +142,21 @@ namespace Hotel.Controllers
             _toastNotification.Warning("لطفا ابتدا وارد شوید");
             return RedirectToAction("Login");
         }
+
+        #endregion
+
+
+        #region External Login
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult ExtenalLogin(string provider,string returnurl = null)
+        //{
+        //    var redirect = Url.Action("ExtenalLoginCallback", "Account", new { ReturnUrl = returnurl });
+        //    var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
+        //    return Challenge(properties,provider);
+        //}
 
         #endregion
 
