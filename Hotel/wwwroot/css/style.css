@@ -26,9 +26,9 @@
   background-size: cover;
 }
 
-/*img {
+img {
   width: 100%;
-}*/
+}
 
 a{
   text-decoration: none;
@@ -861,7 +861,7 @@ ul  li{
 }
 
 .sidebar .nav-link.active {
-  color: #111111;
+  color: #2470dc;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -881,7 +881,6 @@ ul  li{
   padding-bottom: .75rem;
   background-color: rgba(0, 0, 0, .25);
   box-shadow: inset 1px 0 0 rgba(0, 0, 0, .25);
-    color: black;
 }
 
 .navbar .navbar-toggler {
