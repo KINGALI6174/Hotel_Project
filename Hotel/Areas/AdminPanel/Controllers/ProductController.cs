@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Hotel.Application.DTOs.AdminSide.Product;
+using Hotel.Application.Services.Interface;
 using Hotel.Domain.Entities.Product;
 using Hotel.Domain.RepositoryInterface;
 using Microsoft.AspNetCore.Authorization;
@@ -14,15 +15,14 @@ namespace Hotel.Areas.AdminPanel.Controllers
     {
         #region Ctor
 
+        private readonly IDashboardService _Service;
         private readonly INotyfService _toast;
-        private IHotelService _Service;
 
-        public ProductController(INotyfService toast, IHotelService service)
+        public ProductController(IDashboardService boardService, INotyfService toast)
         {
+            _Service = boardService;
             _toast = toast;
-            _Service = service;
         }
-        
 
         #endregion
         public IActionResult ShowAllHotels()
@@ -44,27 +44,7 @@ namespace Hotel.Areas.AdminPanel.Controllers
             {
                 try
                 {
-                    var hotel = new Domain.Entities.Product.Hotel()
-                    {
-                        Title = model.Title,
-                        DateTime = DateTime.Now,
-                        Description = model.Description,
-                        EntryTime = model.EntryTime,
-                        ExitTime = model.ExitTime,
-                        RoomCount = model.RoomCount,
-                        StageCount = model.StageCount,
-                    };
-                    _Service.AddHotel(hotel);
-
-                    var address = new HotelAddress()
-                    {
-                        Address = model.Address,
-                        City = model.City,
-                        State = model.State,
-                        HotelId = hotel.ID,
-                    };
-                    hotel.IsActive = true;
-                    _Service.InsetAddress(address);
+                    _Service.CreateHotel(model);
                     
                     _toast.Success("هتل با موفقیت ثبت شد");
                     return RedirectToAction("ShowAllHotels");
@@ -85,11 +65,20 @@ namespace Hotel.Areas.AdminPanel.Controllers
 
         #endregion
 
-        #region Edit
+        #region Edit Hotel
 
-        public IActionResult EditHotel()
+        public IActionResult EditHotel(EditHotelDTO model)
         {
+            
             return View();
+        }
+
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult EditHotel(int id,Domain.Entities.Product.Hotel hotel,HotelAddress hotelAddress)
+        {
+            _Service.UpdateHotel(hotel);
+            _Service.UpdateAddress(hotelAddress);
+            return RedirectToAction("ShowAllHotels");
         }
 
         #endregion

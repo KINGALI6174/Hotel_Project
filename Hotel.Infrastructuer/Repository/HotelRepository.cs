@@ -12,11 +12,11 @@ using Microsoft.EntityFrameworkCore;
 namespace Hotel.Infrastructuer.Repository;
 
 
-public class HotelService : IHotelService
+public class HotelRepository : IHotelRepository
 {
     private readonly HotelDbContext _context;
 
-    public HotelService(HotelDbContext context)
+    public HotelRepository(HotelDbContext context)
     {
         _context = context;
     }
@@ -35,6 +35,8 @@ public class HotelService : IHotelService
     {
         return _context.Hotels.SingleOrDefault(a => a.ID == id) ?? throw new Exception();
     }
+
+   
 
     public void InsetAddress(HotelAddress address)
     { 

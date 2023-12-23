@@ -11,6 +11,7 @@ namespace Hotel.Application.DTOs.AdminSide.Product
     {
         #region Hotel
 
+        
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
         [MaxLength(50, ErrorMessage = "تعداد کارکترها نمیتواند بیش تر از{1}باشد")]
@@ -42,6 +43,7 @@ namespace Hotel.Application.DTOs.AdminSide.Product
         #endregion
 
         #region Hotel Address
+        
 
         [Display(Name = "آدرس هتل")]
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
