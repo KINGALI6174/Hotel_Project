@@ -13,5 +13,5 @@ public interface IHotelService
     public void UpdateAddress(HotelAddress address);
     public Domain.Entities.Product.Hotel GetHotelById(int id);
 
-    public EditHotelDTO EditHotelById(int id);
+    public EditHotelDTO EditHotelById(int id,Domain.Entities.Product.Hotel hotel,HotelAddress address);
 }

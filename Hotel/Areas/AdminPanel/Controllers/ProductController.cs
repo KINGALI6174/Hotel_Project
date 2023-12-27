@@ -37,7 +37,7 @@ namespace Hotel.Areas.AdminPanel.Controllers
             return View();
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public IActionResult CreateHotel(CreateHotelDTO model)
         {
             if (ModelState.IsValid)
@@ -45,7 +45,7 @@ namespace Hotel.Areas.AdminPanel.Controllers
                 try
                 {
                     _Service.CreateHotel(model);
-                    
+
                     _toast.Success("هتل با موفقیت ثبت شد");
                     return RedirectToAction("ShowAllHotels");
                 }
@@ -67,14 +67,14 @@ namespace Hotel.Areas.AdminPanel.Controllers
 
         #region Edit Hotel
 
-        public IActionResult EditHotel(EditHotelDTO model)
+        public IActionResult EditHotel(int id, Domain.Entities.Product.Hotel hotel, HotelAddress address,string a)
         {
-            
-            return View();
+            var edit = _Service.EditHotelById(id, hotel, address);
+            return View(edit);
         }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public IActionResult EditHotel(int id,Domain.Entities.Product.Hotel hotel,HotelAddress hotelAddress)
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult EditHotel(int id, Domain.Entities.Product.Hotel hotel, HotelAddress hotelAddress)
         {
             _Service.UpdateHotel(hotel);
             _Service.UpdateAddress(hotelAddress);
@@ -86,3 +86,6 @@ namespace Hotel.Areas.AdminPanel.Controllers
 
     }
 }
+
+
+

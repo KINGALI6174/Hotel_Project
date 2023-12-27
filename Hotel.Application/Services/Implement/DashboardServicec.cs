@@ -52,9 +52,10 @@ public class DashboardServicec : IDashboardService
         return _Service.GetHotelById(id);
     }
 
-    public EditHotelDTO GetHotel(int id)
+    public EditHotelDTO EditHotelById(int id, Domain.Entities.Product.Hotel hotel, HotelAddress address)
     {
-        return null;
+        var edithoteldto = _Service.EditHotelById(id,hotel,address);
+        return edithoteldto;
     }
 
 

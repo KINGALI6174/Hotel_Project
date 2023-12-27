@@ -57,10 +57,26 @@ namespace Hotel.Application.Services.Implement
             return _Service.GetHotelById(id);
         }
 
-        public EditHotelDTO EditHotelById(int id)
+        public EditHotelDTO EditHotelById(int id, Domain.Entities.Product.Hotel hotel, HotelAddress address)
         {
-            var hotel = _Service.GetHotelById(id);
-            return null;
+            hotel = _Service.GetHotelById(id);
+            address = _Service.GetHotelAddress(id);
+            var edithoteldto = new EditHotelDTO()
+            {
+                ID = hotel.ID,
+                Title = hotel.Title,
+                Description = hotel.Description,
+                EntryTime = hotel.EntryTime,
+                ExitTime = hotel.ExitTime,
+                IsActive = hotel.IsActive,
+                RoomCount = hotel.RoomCount,
+                StageCount = hotel.StageCount,
+                Address = address.Address,
+                City = address.City,
+                State = address.State,
+            };
+            return edithoteldto;
         }
+
     }
 }

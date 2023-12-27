@@ -15,5 +15,6 @@ public interface IHotelRepository
      
      public Entities.Product.Hotel GetHotelById(int id);
      
+     public HotelAddress GetHotelAddress(int id);
 
 }

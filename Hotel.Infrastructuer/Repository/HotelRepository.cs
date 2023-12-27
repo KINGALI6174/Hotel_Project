@@ -36,7 +36,11 @@ public class HotelRepository : IHotelRepository
         return _context.Hotels.SingleOrDefault(a => a.ID == id) ?? throw new Exception();
     }
 
-   
+    public HotelAddress GetHotelAddress(int id)
+    {
+        return _context.HotelAddresses.SingleOrDefault(a => a.HotelId == id);
+    }
+
 
     public void InsetAddress(HotelAddress address)
     { 
@@ -47,11 +51,13 @@ public class HotelRepository : IHotelRepository
     public void UpdateHotel(Domain.Entities.Product.Hotel hotel)
     {
         _context.Hotels.Update(hotel);
+        _context.SaveChanges();
     }
 
     public void UpdateAddress(HotelAddress address)
     {
         _context.HotelAddresses.Update(address);
+        _context.SaveChanges();
     }
 
    
