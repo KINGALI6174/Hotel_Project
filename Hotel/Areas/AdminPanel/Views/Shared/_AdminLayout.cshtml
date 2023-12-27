@@ -1,10 +1,10 @@
 ﻿
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-bs-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ادمین سایت</title>
+    <title>پنل ادمین</title>
 
     <link href="/css/bootstrap.rtl.css" rel="stylesheet" />
     <link href="/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
@@ -13,8 +13,14 @@
 </head>
 <body>
     <partial name="_PartialAdminHeader" />
-
-    @RenderBody()
+    <main class="container-fluid">
+        <div class="row">
+            <partial name="_PartialAdminSideBar" />
+                <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    @RenderBody()
+                </div>
+        </div>
+    </main>
 
     <script src="/js/bootstrap.bundle.js"></script>
 

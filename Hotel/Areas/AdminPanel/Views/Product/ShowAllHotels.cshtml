@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Hotel.Domain.Entities.Product.Hotel>
+@{
+    ViewData["Title"] = "ShowAllHotels";
+}
+
+<div class="container">
+    <h1>هتل های سایت</h1>
+
+    <p>
+        <a class="btn btn-outline-info" asp-controller="Product" asp-action="CreateHotel">ایجاد هتل</a>
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                عنوان
+            </th>
+            <th>
+                وضعیت
+            </th>
+            <th>
+                تعداد اتاق ها
+            </th>
+            <th>
+                مکمل ها
+            </th>
+            <th>
+                اتاق ها
+            </th>
+            <th>
+                عملیات
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+       @if (Model.Any())
+       {
+           @foreach (var item in Model)
+           {
+               <tr>
+                   <td>
+                       @item.Title
+                   </td>
+                   <td>
+                       @if (item.IsActive)
+                       {
+                           <button class="btn btn-success">فعال</button>
+                       }
+                       else
+                       {
+                           <button class="btn btn-danger">غیرفعال</button>
+                       }
+                   </td>
+                   <td>
+                       @item.RoomCount
+                   </td>
+                   <td>
+                       <a href="#" class="btn btn-sm btn-outline-primary">تصویر</a>
+                       <a href="#" class="btn btn-sm btn-outline-primary ms-2">قوانین</a>
+                   </td>
+                   <td>
+                       <a href="#" class="btn btn-sm btn-outline-primary ms-2">اتاق ها</a>
+                   </td>
+                   <td>
+                       <a class="btn btn-outline-warning" asp-controller="Product" asp-action="EditHotel" asp-route-id="@item.ID">ویرایش</a> |
+                       <a class="btn btn-outline-primary" asp-controller="FirstBaners" asp-action="Details" asp-route-id="@item.ID">جزئیات</a> |
+                       <a class="btn btn-outline-danger" asp-controller="FirstBaners" asp-action="Delete" asp-route-id="@item.ID">حذف</a>
+                   </td>
+               </tr>
+           }
+       }
+       else
+       {
+           <tr>
+               <td>
+                   در حال حاظر هتلی ثبت نشده است ..
+               </td>
+           </tr>
+       }
+        </tbody>
+    </table>
+</div>
