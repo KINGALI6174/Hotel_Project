@@ -94,7 +94,7 @@ namespace Hotel.Controllers
                 var claims = new List<Claim>
                 {
                     new (ClaimTypes.NameIdentifier, user.ID.ToString()),
-                    new (ClaimTypes.Name, user.NationalCode),
+                    new (ClaimTypes.Name, user.FName),
                 };
 
                 var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -126,6 +126,20 @@ namespace Hotel.Controllers
 
         #endregion
 
+
+        #region User Dashbord
+
+        public IActionResult UserDashborad()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+            return View();
+            }
+            _toastNotification.Warning("لطفا ابتدا وارد شوید");
+            return RedirectToAction("Login");
+        }
+
+        #endregion
 
     }
 }

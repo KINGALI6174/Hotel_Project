@@ -26,7 +26,10 @@ namespace Hotel.Domain.Entities.Product
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
         [MaxLength(35, ErrorMessage = "تعداد کارکترها نمیتواند بیش تر از{1}باشد")]
         [MinLength(2, ErrorMessage = "تعداد کارکترها نمیتواند کمتر از{1}باشد")]
+
         public string State { get; set; }
+    
+        
 
 
         #region Navigation

@@ -24,6 +24,7 @@ namespace Hotel.Infrastructuer.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<AdvantageToRoom>().HasKey(ar => new { ar.RoomId, ar.AdvantageId });
             base.OnModelCreating(modelBuilder);
         }
@@ -44,5 +45,6 @@ namespace Hotel.Infrastructuer.DbContext
         public DbSet<ReserveRoom> ReserveRooms { get; set; }
 
     #endregion
-}
+  }
+
 }
