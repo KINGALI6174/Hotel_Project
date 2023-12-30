@@ -63,7 +63,7 @@
                        <a href="#" class="btn btn-sm btn-outline-primary ms-2">اتاق ها</a>
                    </td>
                    <td>
-                       <a class="btn btn-outline-warning" asp-controller="Product" asp-action="EditHotel" asp-route-id="@item.ID">ویرایش</a> |
+                       <a class="btn btn-outline-warning" asp-area="AdminPanel" asp-controller="Product" asp-action="EditHotel" asp-route-id="@item.ID">ویرایش</a> |
                        <a class="btn btn-outline-primary" asp-controller="FirstBaners" asp-action="Details" asp-route-id="@item.ID">جزئیات</a> |
                        <a class="btn btn-outline-danger" asp-controller="FirstBaners" asp-action="Delete" asp-route-id="@item.ID">حذف</a>
                    </td>

@@ -3,6 +3,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Hotel.Application.DTOs.SiteSide.UserLogin;
 using Hotel.Application.DTOs.SiteSide.UserRegister;
 using Hotel.Application.Security;
+using Hotel.Application.Services.Interface;
 using Hotel.Domain.Entities.Account;
 using Hotel.Infrastructuer.DbContext;
 using Microsoft.AspNetCore.Authentication;
@@ -15,18 +16,18 @@ namespace Hotel.Controllers
     public class AccountController : Controller
     {
         #region Ctor
-        private readonly IToastNotification _toast;
-        private readonly INotyfService _toastNotification;
-        private readonly HotelDbContext _context;
 
-        public AccountController(IToastNotification toast, INotyfService toastNotification, HotelDbContext context)
+        private readonly INotyfService _toastNotification;
+        private readonly IHotelService _hotelService;
+
+        public AccountController(INotyfService toastNotification, IHotelService hotelService)
         {
-            _toast = toast;
             _toastNotification = toastNotification;
-            _context = context;
+            _hotelService = hotelService;
         }
 
         #endregion
+
 
         #region Register
         public IActionResult Register()
@@ -39,28 +40,14 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_context.Users.Any(u => u.NationalCode == UserDTO.NationalCode.Trim()) == false)
+                bool Result = _hotelService.RegisterUser(UserDTO);
+                if (Result)
                 {
-                    Domain.Entities.Account.User user = new User()
-                    {
-                        FName = UserDTO.FName,
-                        LName = UserDTO.LName,
-                        NationalCode = UserDTO.NationalCode,
-                        PhoneNumber = UserDTO.PhoneNumber,
-                        Email = UserDTO.Email.Trim(),
-                        Password = PasswordHelper.EncodePasswordMd5(UserDTO.Password),
-                    };
-                    _context.Users.Add(user);
-                    _context.SaveChanges();
-
-                    //_toast.AddSuccessToastMessage("ثبت نام با موفقیت انجام شد");
                     _toastNotification.Success("ثبت نام با موفقیت انجام شد .");
-                    //_toastNotification.Success("he");
                     return RedirectToAction("Index", "Home");
                 }
-                //_toast.AddErrorToastMessage("این ایمیل قبلا ثبت نام شده است .");
-                _toastNotification.Error("کاربر با این کد ملی قبلا ثبت نام شده است .");
             }
+            _toastNotification.Error("کاربر با این کد ملی قبلا ثبت نام شده است .");
             return View();
         }
 
@@ -79,36 +66,32 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                #region Find User
-                var user = _context.Users.FirstOrDefault(u => u.NationalCode == model.NationalCode.Trim()
-                                                              && u.Password == PasswordHelper.EncodePasswordMd5(model.Password));
-                if (user == null)
+                var user = _hotelService.GetUserByNationalCode(model.NationalCode);
+                if (user != null)
                 {
-                    _toastNotification.Error("مشخصات وارد شده صحیح نمی باشد");
-                    return View("Login");
+                    if (_hotelService.CheckPassword(model.NationalCode, model.Password))
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new (ClaimTypes.NameIdentifier, user.ID.ToString()),
+                            new (ClaimTypes.Name, user.NationalCode),
+                        };
+
+                        var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(claimIdentity);
+
+                        var authProps = new AuthenticationProperties();
+                        authProps.IsPersistent = model.RememberMe;
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
+                        _toastNotification.Information("ورود با موفقیت انجام شد");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    _toastNotification.Error("پسورد وارد شده صحیح نمی باشد");
+                    return View();
                 }
-                #endregion
-
-                #region setting cooki
-
-                var claims = new List<Claim>
-                {
-                    new (ClaimTypes.NameIdentifier, user.ID.ToString()),
-                    new (ClaimTypes.Name, user.NationalCode),
-                };
-
-                var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(claimIdentity);
-
-                var authProps = new AuthenticationProperties();
-                authProps.IsPersistent = model.RememberMe;
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
-                _toastNotification.Information("ورود با موفقیت انجام شد");
-
-                return RedirectToAction("Index", "Home");
-
-                #endregion
+                _toastNotification.Error("کاربری با این شماره ملی یافت نشد");
             }
             return View();
         }

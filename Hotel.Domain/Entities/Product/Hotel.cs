@@ -42,6 +42,25 @@ namespace Hotel.Domain.Entities.Product
         [Display(Name = "وضعیت")]
         public bool IsActive { get; set; }
 
+
+        [Display(Name = "آدرس هتل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
+        [MaxLength(500, ErrorMessage = "تعداد کارکترها نمیتواند بیش تر از{1}باشد")]
+        [MinLength(10, ErrorMessage = "تعداد کارکترها نمیتواند کمتر از{1}باشد")]
+        public string Address { get; set; }
+
+        [Display(Name = "شهر")]
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
+        [MaxLength(35, ErrorMessage = "تعداد کارکترها نمیتواند بیش تر از{1}باشد")]
+        [MinLength(2, ErrorMessage = "تعداد کارکترها نمیتواند کمتر از{1}باشد")]
+        public string City { get; set; }
+
+        [Display(Name = "استان")]
+        [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
+        [MaxLength(35, ErrorMessage = "تعداد کارکترها نمیتواند بیش تر از{1}باشد")]
+        [MinLength(2, ErrorMessage = "تعداد کارکترها نمیتواند کمتر از{1}باشد")]
+        public string State { get; set; }
+
         public ICollection<HotelGallery> HotelGalleries { get; set; }
         public ICollection<HotelRoom> HotelRooms { get; set; }
         public ICollection<HotelRule> HotelRules { get; set; }

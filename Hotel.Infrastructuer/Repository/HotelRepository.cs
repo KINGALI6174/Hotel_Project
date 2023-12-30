@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hotel.Domain.Entities.Account;
 using Hotel.Domain.Entities.Product;
 using Hotel.Domain.RepositoryInterface;
 using Hotel.Infrastructuer.DbContext;
@@ -21,45 +22,55 @@ public class HotelRepository : IHotelRepository
         _context = context;
     }
 
-    public void AddHotel(Domain.Entities.Product.Hotel hotel)
+    public IEnumerable<Domain.Entities.Product.Hotel> GetAllHotel()
+    {
+        return _context.Hotels.ToList();
+    }
+
+    public void CreateHotel(Domain.Entities.Product.Hotel hotel)
     {
         _context.Hotels.Add(hotel);
         _context.SaveChanges();
     }
 
-    public IEnumerable<Domain.Entities.Product.Hotel> GetAllHotel()
-    {
-        return _context.Hotels.ToList();
-    }
     public Domain.Entities.Product.Hotel GetHotelById(int id)
     {
         return _context.Hotels.SingleOrDefault(a => a.ID == id) ?? throw new Exception();
     }
 
-    public HotelAddress GetHotelAddress(int id)
+    public bool IsExistByNatinalCode(string natinalCode)
     {
-        return _context.HotelAddresses.SingleOrDefault(a => a.HotelId == id);
+        return _context.Users.Any(u => u.NationalCode == natinalCode);
     }
 
+    public void AddUserToDataBase(User user)
+    {
+        _context.Users.Add(user);
+        SaveChange();
+    }
 
-    public void InsetAddress(HotelAddress address)
-    { 
-        _context.HotelAddresses.Add(address);
+    public void SaveChange()
+    {
         _context.SaveChanges();
     }
+
+    public User? GetUserByNationalCode(string nationalCode)
+    {
+        return _context.Users.SingleOrDefault(p=> p.IsDelete == false && p.NationalCode == nationalCode);
+    }
+
+    public bool CheckPassword(string nationalCode, string Password)
+    {
+        var user = GetUserByNationalCode(nationalCode);
+        bool result = user.Password == Password;
+        return result;
+    }
+
 
     public void UpdateHotel(Domain.Entities.Product.Hotel hotel)
     {
         _context.Hotels.Update(hotel);
-        _context.SaveChanges();
+        SaveChange();
     }
-
-    public void UpdateAddress(HotelAddress address)
-    {
-        _context.HotelAddresses.Update(address);
-        _context.SaveChanges();
-    }
-
-   
 }
 

@@ -1,4 +1,6 @@
-﻿using Hotel.Domain.Entities.Product;
+﻿
+using Hotel.Domain.Entities.Account;
+using Hotel.Domain.Entities.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Domain.RepositoryInterface;
@@ -7,14 +9,19 @@ namespace Hotel.Domain.RepositoryInterface;
 public interface IHotelRepository
 {
     public IEnumerable<Entities.Product.Hotel> GetAllHotel();
+    public void CreateHotel(Entities.Product.Hotel hotel);
+    public void UpdateHotel(Entities.Product.Hotel hotel);
+    public Entities.Product.Hotel GetHotelById(int id);
 
-    public void AddHotel(Entities.Product.Hotel hotel);
-     public void InsetAddress(HotelAddress address);
-     public void UpdateHotel(Entities.Product.Hotel hotel);
-     public void UpdateAddress(HotelAddress address);
-     
-     public Entities.Product.Hotel GetHotelById(int id);
-     
-     public HotelAddress GetHotelAddress(int id);
+    #region Accounr
+    bool IsExistByNatinalCode(string natinalCode);
+    public void AddUserToDataBase(User user);
+    public void SaveChange();
+    User GetUserByNationalCode(string nationalCode);
+    bool CheckPassword(string nationalCode,string Password);
+
+    #endregion
+
+
 
 }

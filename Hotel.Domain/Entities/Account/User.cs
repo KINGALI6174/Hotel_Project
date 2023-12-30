@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hotel.Domain.Entities.Role;
 
 namespace Hotel.Domain.Entities.Account
 {
     public class User
     {
+        #region property
+
         [Key]
         public int ID { get; set; }
 
@@ -38,6 +42,20 @@ namespace Hotel.Domain.Entities.Account
         [Display(Name = "رمز عبور")]
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید.")]
         public string Password{ get; set; }
+
+        [Required]
+        public bool IsDelete  { get; set;}
+
+
+        #endregion
+
+
+        #region Navigation Property
+
+        public ICollection<UserSelectedRole> UserSelectedRoles { get; set;}
+
+        #endregion
+
 
 
 
