@@ -38,6 +38,8 @@ namespace Hotel
             builder.Services.AddDbContext<HotelDbContext>();
             builder.Services.AddScoped<IHotelRepository, HotelRepository>();
             builder.Services.AddScoped<IHotelService, HotelService>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<IRoleService, RoleService>();
 
             #region Authentication
 
