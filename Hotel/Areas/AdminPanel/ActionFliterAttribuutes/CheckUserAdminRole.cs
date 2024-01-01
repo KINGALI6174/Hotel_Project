@@ -16,19 +16,12 @@ public class CheckUserAdminRole : ActionFilterAttribute
 
         #region دسترسی داشتن کاربر
 
-        bool Permison = false;
-        List<Role> Roles = Service.GetUserRoleByUserId((int)context.HttpContext.User.GetUserId());
 
-        foreach (var item in Roles)
+        var Result = Service.IsUserAdmin((int)context.HttpContext.User.GetUserId());
+        if (Result == false)
         {
-            if (item.RoleUniqName == "Admin")
-            {
-                Permison = true;
-            }
+            context.HttpContext.Response.Redirect("/");
         }
-
-        if (Permison == false) context.HttpContext.Response.Redirect("/");
-
 
         #endregion
 

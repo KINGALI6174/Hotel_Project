@@ -43,8 +43,11 @@ namespace Hotel.Domain.Entities.Account
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید.")]
         public string Password{ get; set; }
 
+        public DateTime CreateDate { get; set; }
+
         [Required]
         public bool IsDelete  { get; set;}
+        public bool SuperAdmin { get; set;}
 
 
         #endregion

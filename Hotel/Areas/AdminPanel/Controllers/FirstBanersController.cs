@@ -10,9 +10,11 @@ using Hotel.Infrastructuer.DbContext;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
-    [Area("AdminPanel")]
-    public class FirstBanersController : Controller
+    
+    public class FirstBanersController : AdminBaseController
     {
+        #region Ctor
+
         private readonly HotelDbContext _context;
 
         public FirstBanersController(HotelDbContext context)
@@ -20,7 +22,8 @@ namespace Hotel.Areas.AdminPanel.Controllers
             _context = context;
         }
 
-        // GET: AdminPanel/FirstBaners
+        #endregion
+
         public async Task<IActionResult> Index()
         {
               return _context.FirstBaners != null ? 
@@ -28,7 +31,8 @@ namespace Hotel.Areas.AdminPanel.Controllers
                           Problem("Entity set 'HotelDbContext.FirstBaners'  is null.");
         }
 
-        // GET: AdminPanel/FirstBaners/Details/5
+        #region Details
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.FirstBaners == null)
@@ -46,15 +50,16 @@ namespace Hotel.Areas.AdminPanel.Controllers
             return View(firstBaner);
         }
 
-        // GET: AdminPanel/FirstBaners/Create
+        #endregion
+
+        #region Create
+
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AdminPanel/FirstBaners/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,banerTitle,banerBotton,ImageName")] FirstBaner firstBaner)
@@ -68,7 +73,11 @@ namespace Hotel.Areas.AdminPanel.Controllers
             return View(firstBaner);
         }
 
-        // GET: AdminPanel/FirstBaners/Edit/5
+
+        #endregion
+
+        #region Edit
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.FirstBaners == null)
@@ -84,9 +93,7 @@ namespace Hotel.Areas.AdminPanel.Controllers
             return View(firstBaner);
         }
 
-        // POST: AdminPanel/FirstBaners/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,banerTitle,banerBotton,ImageName")] FirstBaner firstBaner)
@@ -119,7 +126,10 @@ namespace Hotel.Areas.AdminPanel.Controllers
             return View(firstBaner);
         }
 
-        // GET: AdminPanel/FirstBaners/Delete/5
+        #endregion
+
+        #region Delete
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.FirstBaners == null)
@@ -137,7 +147,7 @@ namespace Hotel.Areas.AdminPanel.Controllers
             return View(firstBaner);
         }
 
-        // POST: AdminPanel/FirstBaners/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -151,10 +161,12 @@ namespace Hotel.Areas.AdminPanel.Controllers
             {
                 _context.FirstBaners.Remove(firstBaner);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        #endregion
 
         private bool FirstBanerExists(int id)
         {

@@ -7,10 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
-    [Area("AdminPanel")]
-    [Authorize]
-    [CheckUserAdminRole]
-    public class DashboardController : Controller
+    
+    public class DashboardController : AdminBaseController
     {
         #region Ctor
 

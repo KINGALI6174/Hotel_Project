@@ -38,39 +38,10 @@ public class HotelRepository : IHotelRepository
         return _context.Hotels.SingleOrDefault(a => a.ID == id) ?? throw new Exception();
     }
 
-    public bool IsExistByNatinalCode(string natinalCode)
-    {
-        return _context.Users.Any(u => u.NationalCode == natinalCode);
-    }
-
-    public void AddUserToDataBase(User user)
-    {
-        _context.Users.Add(user);
-        SaveChange();
-    }
-
-    public void SaveChange()
-    {
-        _context.SaveChanges();
-    }
-
-    public User? GetUserByNationalCode(string nationalCode)
-    {
-        return _context.Users.SingleOrDefault(p=> p.IsDelete == false && p.NationalCode == nationalCode);
-    }
-
-    public bool CheckPassword(string nationalCode, string Password)
-    {
-        var user = GetUserByNationalCode(nationalCode);
-        bool result = user.Password == Password;
-        return result;
-    }
-
-
     public void UpdateHotel(Domain.Entities.Product.Hotel hotel)
     {
         _context.Hotels.Update(hotel);
-        SaveChange();
+        _context.SaveChanges();
     }
 }
 

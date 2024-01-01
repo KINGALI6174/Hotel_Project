@@ -23,11 +23,13 @@ namespace Hotel.Application.Services.Implement
 
         private readonly INotyfService _notyf;
         private readonly IHotelRepository _ServiceRepo;
+        private readonly IUserRepository _UserRepository;
 
-        public HotelService(INotyfService notyf, IHotelRepository service)
+        public HotelService(INotyfService notyf, IHotelRepository service, IUserRepository userRepository)
         {
             _notyf = notyf;
             _ServiceRepo = service;
+            _UserRepository = userRepository;
         }
 
         #endregion
@@ -93,12 +95,12 @@ namespace Hotel.Application.Services.Implement
 
         public bool IsExistByNatinalCode(string natinalCode)
         {
-            return _ServiceRepo.IsExistByNatinalCode(natinalCode.Trim());
+            return _UserRepository.IsExistByNatinalCode(natinalCode.Trim());
         }
 
         public void AddUser(User user)
         {
-            _ServiceRepo.AddUserToDataBase(user);
+            _UserRepository.AddUserToDataBase(user);
         }
 
         public User FillUser(UserRegisterDTO userDTO)
@@ -134,17 +136,17 @@ namespace Hotel.Application.Services.Implement
 
         public User? GetUserByNationalCode(string nationalCode)
         {
-            return _ServiceRepo.GetUserByNationalCode(nationalCode.Trim());
+            return _UserRepository.GetUserByNationalCode(nationalCode.Trim());
         }
 
         public bool CheckPassword(string NationalCode,string Password)
         {
-            return _ServiceRepo.CheckPassword(NationalCode, PasswordHelper.EncodePasswordMd5(Password));
+            return _UserRepository.CheckPassword(NationalCode, PasswordHelper.EncodePasswordMd5(Password));
         }
 
         public bool LoginUser(UserLoginDTO userLoginDTO)
         {
-            var user = _ServiceRepo.GetUserByNationalCode(userLoginDTO.NationalCode);
+            var user = _UserRepository.GetUserByNationalCode(userLoginDTO.NationalCode);
             if (user == null)
             {
                 return false;

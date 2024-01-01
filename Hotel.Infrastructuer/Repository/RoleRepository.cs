@@ -1,4 +1,5 @@
-﻿using Hotel.Domain.Entities.Role;
+﻿using Hotel.Domain.Entities.Account;
+using Hotel.Domain.Entities.Role;
 using Hotel.Domain.RepositoryInterface;
 using Hotel.Infrastructuer.DbContext;
 
@@ -26,5 +27,6 @@ public class RoleRepository : IRoleRepository
                                 .ToList();  
         return role;
     }
+
 }
 

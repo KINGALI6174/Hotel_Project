@@ -9,9 +9,8 @@ using Hotel = Hotel.Domain.Entities.Product.Hotel;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
-    [Area("AdminPanel")]
-    [Authorize]
-    public class ProductController : Controller
+    
+    public class ProductController : AdminBaseController
     {
         #region Ctor
 

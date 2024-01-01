@@ -13,15 +13,4 @@ public interface IHotelRepository
     public void UpdateHotel(Entities.Product.Hotel hotel);
     public Entities.Product.Hotel GetHotelById(int id);
 
-    #region Accounr
-    bool IsExistByNatinalCode(string natinalCode);
-    public void AddUserToDataBase(User user);
-    public void SaveChange();
-    User GetUserByNationalCode(string nationalCode);
-    bool CheckPassword(string nationalCode,string Password);
-
-    #endregion
-
-
-
 }
