@@ -49,6 +49,8 @@ namespace Hotel.Domain.Entities.Account
         public bool IsDelete  { get; set;}
         public bool SuperAdmin { get; set;}
 
+        public string? UserAvatar { get; set; }
+
 
         #endregion
 

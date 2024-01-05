@@ -9,7 +9,6 @@ using Hotel.Infrastructuer.DbContext;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 
 namespace Hotel.Controllers
 {
@@ -18,12 +17,12 @@ namespace Hotel.Controllers
         #region Ctor
 
         private readonly INotyfService _toastNotification;
-        private readonly IHotelService _hotelService;
+        private readonly IUserService _userService;
 
-        public AccountController(INotyfService toastNotification, IHotelService hotelService)
+        public AccountController(INotyfService toastNotification, IUserService userService)
         {
             _toastNotification = toastNotification;
-            _hotelService = hotelService;
+            _userService = userService;
         }
 
         #endregion
@@ -40,7 +39,7 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool Result = _hotelService.RegisterUser(UserDTO);
+                bool Result = _userService.RegisterUser(UserDTO);
                 if (Result)
                 {
                     _toastNotification.Success("ثبت نام با موفقیت انجام شد .");
@@ -66,10 +65,10 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _hotelService.GetUserByNationalCode(model.NationalCode);
+                var user = _userService.GetUserByNationalCode(model.NationalCode);
                 if (user != null)
                 {
-                    if (_hotelService.CheckPassword(model.NationalCode, model.Password))
+                    if (_userService.CheckPassword(model.NationalCode, model.Password))
                     {
                         var claims = new List<Claim>
                         {

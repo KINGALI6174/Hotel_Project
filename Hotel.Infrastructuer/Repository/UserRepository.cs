@@ -58,7 +58,8 @@ public class UserRepository : IUserRepository
     {
         return _context.Users
                     .Where( p => !p.IsDelete)
-                    .OrderByDescending(p => p.)
+                    .OrderByDescending(p => p.CreateDate)
+                    .ToList(); 
     }
 
     #endregion

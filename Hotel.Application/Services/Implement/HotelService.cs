@@ -23,13 +23,12 @@ namespace Hotel.Application.Services.Implement
 
         private readonly INotyfService _notyf;
         private readonly IHotelRepository _ServiceRepo;
-        private readonly IUserRepository _UserRepository;
+       
 
-        public HotelService(INotyfService notyf, IHotelRepository service, IUserRepository userRepository)
+        public HotelService(INotyfService notyf, IHotelRepository service)
         {
             _notyf = notyf;
             _ServiceRepo = service;
-            _UserRepository = userRepository;
         }
 
         #endregion
@@ -74,7 +73,6 @@ namespace Hotel.Application.Services.Implement
             _ServiceRepo.UpdateHotel(hotell);
         }
 
-
         public EditHotelDTO GetHotelById(int id)
         {
             var hotel = _ServiceRepo.GetHotelById(id);
@@ -93,66 +91,5 @@ namespace Hotel.Application.Services.Implement
             return hotelDTO;
         }
 
-        public bool IsExistByNatinalCode(string natinalCode)
-        {
-            return _UserRepository.IsExistByNatinalCode(natinalCode.Trim());
-        }
-
-        public void AddUser(User user)
-        {
-            _UserRepository.AddUserToDataBase(user);
-        }
-
-        public User FillUser(UserRegisterDTO userDTO)
-        {
-            Domain.Entities.Account.User user = new User()
-            {
-                FName = userDTO.FName,
-                LName = userDTO.LName,
-                NationalCode = userDTO.NationalCode,
-                PhoneNumber = userDTO.PhoneNumber,
-                Email = userDTO.Email.Trim(),
-                Password = PasswordHelper.EncodePasswordMd5(userDTO.Password),
-            };
-            return user;
-        }
-
-        public bool RegisterUser(UserRegisterDTO userRegisterDto)
-        {
-            // Is Exist User By National Code
-            var isExist = IsExistByNatinalCode(userRegisterDto.NationalCode);
-            if (isExist == true)
-            {
-                return false;
-            }
-
-            // Fill Entity
-            var user = FillUser(userRegisterDto);
-
-            // Add To Database
-            AddUser(user);
-            return true;
-        }
-
-        public User? GetUserByNationalCode(string nationalCode)
-        {
-            return _UserRepository.GetUserByNationalCode(nationalCode.Trim());
-        }
-
-        public bool CheckPassword(string NationalCode,string Password)
-        {
-            return _UserRepository.CheckPassword(NationalCode, PasswordHelper.EncodePasswordMd5(Password));
-        }
-
-        public bool LoginUser(UserLoginDTO userLoginDTO)
-        {
-            var user = _UserRepository.GetUserByNationalCode(userLoginDTO.NationalCode);
-            if (user == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
     }
 }

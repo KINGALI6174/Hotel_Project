@@ -12,11 +12,4 @@ public interface IHotelService
     public void CreateHotel(CreateHotelDTO model);
     public void UpdateHotel(EditHotelDTO hotel);
     public EditHotelDTO GetHotelById(int id);
-    bool IsExistByNatinalCode(string natinalCode);
-    public void AddUser(User user);
-    User FillUser(UserRegisterDTO userDTO);
-    bool RegisterUser(UserRegisterDTO userRegisterDto);
-    User? GetUserByNationalCode(string nationalCode);
-
-    bool CheckPassword (string nationalCode,string Password);
 }
