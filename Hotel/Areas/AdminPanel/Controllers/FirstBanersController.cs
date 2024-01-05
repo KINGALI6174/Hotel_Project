@@ -7,11 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hotel.Domain.Entities.Web;
 using Hotel.Infrastructuer.DbContext;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
+<<<<<<< HEAD
     
     public class FirstBanersController : AdminBaseController
+=======
+    [Area("AdminPanel")]
+    [Authorize]
+    public class FirstBanersController : Controller
+>>>>>>> 78d1bb00570448618eee940fe6a62a33cdf6cd4b
     {
         #region Ctor
 

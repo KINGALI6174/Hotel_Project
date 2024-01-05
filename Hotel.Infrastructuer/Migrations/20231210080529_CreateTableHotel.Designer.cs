@@ -4,6 +4,7 @@ using Hotel.Infrastructuer.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Infrastructuer.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231210080529_CreateTableHotel")]
+    partial class CreateTableHotel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,6 @@ namespace Hotel.Infrastructuer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -40,9 +40,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LName")
                         .IsRequired()
@@ -58,12 +55,6 @@ namespace Hotel.Infrastructuer.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SuperAdmin")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserAvatar")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -112,16 +103,6 @@ namespace Hotel.Infrastructuer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
@@ -147,11 +128,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.Property<int>("StageCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -162,8 +138,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.ToTable("Hotels");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("Hotel.Domain.Entities.Product.HotelAddress", b =>
                 {
                     b.Property<int>("HotelId")
@@ -179,10 +153,7 @@ namespace Hotel.Infrastructuer.Migrations
                         .HasMaxLength(35)
                         .HasColumnType("nvarchar(35)");
 
-
-                    b.Property<string>("State")
-
-
+                    b.Property<string>("Stage")
                         .IsRequired()
                         .HasMaxLength(35)
                         .HasColumnType("nvarchar(35)");
@@ -192,7 +163,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.ToTable("HotelAddresses");
                 });
 
->>>>>>> 78d1bb00570448618eee940fe6a62a33cdf6cd4b
             modelBuilder.Entity("Hotel.Domain.Entities.Product.HotelGallery", b =>
                 {
                     b.Property<int>("ID")
@@ -315,58 +285,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.ToTable("ReserveRooms");
                 });
 
-            modelBuilder.Entity("Hotel.Domain.Entities.Role.Role", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RoleTitle")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("RoleUniqName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Hotel.Domain.Entities.Role.UserSelectedRole", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserSelectedRoles");
-                });
-
             modelBuilder.Entity("Hotel.Domain.Entities.Web.FirstBaner", b =>
                 {
                     b.Property<int>("ID")
@@ -409,6 +327,17 @@ namespace Hotel.Infrastructuer.Migrations
                     b.Navigation("AdvantageRoom");
 
                     b.Navigation("HotelRoom");
+                });
+
+            modelBuilder.Entity("Hotel.Domain.Entities.Product.HotelAddress", b =>
+                {
+                    b.HasOne("Hotel.Domain.Entities.Product.Hotel", "hetel")
+                        .WithMany()
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("hetel");
                 });
 
             modelBuilder.Entity("Hotel.Domain.Entities.Product.HotelGallery", b =>
@@ -455,30 +384,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.Navigation("HotelRoom");
                 });
 
-            modelBuilder.Entity("Hotel.Domain.Entities.Role.UserSelectedRole", b =>
-                {
-                    b.HasOne("Hotel.Domain.Entities.Role.Role", "Role")
-                        .WithMany("UserSelectedRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hotel.Domain.Entities.Account.User", "User")
-                        .WithMany("UserSelectedRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Hotel.Domain.Entities.Account.User", b =>
-                {
-                    b.Navigation("UserSelectedRoles");
-                });
-
             modelBuilder.Entity("Hotel.Domain.Entities.Product.AdvantageRoom", b =>
                 {
                     b.Navigation("AdvantageToRooms");
@@ -498,11 +403,6 @@ namespace Hotel.Infrastructuer.Migrations
                     b.Navigation("AdvantageToRooms");
 
                     b.Navigation("reserveRooms");
-                });
-
-            modelBuilder.Entity("Hotel.Domain.Entities.Role.Role", b =>
-                {
-                    b.Navigation("UserSelectedRoles");
                 });
 #pragma warning restore 612, 618
         }

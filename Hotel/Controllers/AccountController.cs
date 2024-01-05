@@ -90,7 +90,32 @@ namespace Hotel.Controllers
                     _toastNotification.Error("پسورد وارد شده صحیح نمی باشد");
                     return View();
                 }
+<<<<<<< HEAD
                 _toastNotification.Error("کاربری با این شماره ملی یافت نشد");
+=======
+                #endregion
+
+                #region setting cooki
+
+                var claims = new List<Claim>
+                {
+                    new (ClaimTypes.NameIdentifier, user.ID.ToString()),
+                    new (ClaimTypes.Name, user.FName),
+                };
+
+                var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(claimIdentity);
+
+                var authProps = new AuthenticationProperties();
+                authProps.IsPersistent = model.RememberMe;
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProps);
+                _toastNotification.Information("ورود با موفقیت انجام شد");
+
+                return RedirectToAction("Index", "Home");
+
+                #endregion
+>>>>>>> 78d1bb00570448618eee940fe6a62a33cdf6cd4b
             }
             return View();
         }
@@ -108,6 +133,20 @@ namespace Hotel.Controllers
 
         #endregion
 
+
+        #region User Dashbord
+
+        public IActionResult UserDashborad()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+            return View();
+            }
+            _toastNotification.Warning("لطفا ابتدا وارد شوید");
+            return RedirectToAction("Login");
+        }
+
+        #endregion
 
     }
 }

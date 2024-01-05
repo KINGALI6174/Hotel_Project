@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
+<<<<<<< HEAD
     
     public class DashboardController : AdminBaseController
     {
@@ -21,6 +22,13 @@ namespace Hotel.Areas.AdminPanel.Controllers
         
 
         #endregion
+=======
+
+    [Area("AdminPanel")]
+    [Authorize]
+    public class DashboardController : Controller
+    {
+>>>>>>> 78d1bb00570448618eee940fe6a62a33cdf6cd4b
         public IActionResult Index()
         {
             return View();
