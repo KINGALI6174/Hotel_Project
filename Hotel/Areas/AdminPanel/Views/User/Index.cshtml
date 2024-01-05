@@ -140,14 +140,14 @@
                                                     }
                                                     else
                                                     {
-                                                        <img style="height: 50px;width: 50px;border-radius: 100% !important;" class="img-responsive rounded" src="/Images/UserAvatar/@item.FName" alt="upload_img">
+                                                        <img style="height: 50px;width: 50px;border-radius: 100% !important;" class="img-responsive rounded" src="/Images/UserAvatar/@item.NationalCode" alt="upload_img">
                                                     }
                                                 </td>
                                                 <td>@item.LName</td>
                                                 <td>@item.PhoneNumber</td>
                                                 <td>@item.CreateDate.ToShamsi()</td>
 
-                                                <td>
+                                                @*<td>
 
                                                     <a class="btn btn-warning btn-sm waves-effect"
                                                    asp-action="EditUser"
@@ -177,7 +177,7 @@
                                                         ورود با حساب
                                                     </a>
 
-                                                </td>
+                                                </td>*@
                                             </tr>
                                         }
                                     </tbody>
