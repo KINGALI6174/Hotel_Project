@@ -9,22 +9,22 @@ using Hotel = Hotel.Domain.Entities.Product.Hotel;
 
 namespace Hotel.Areas.AdminPanel.Controllers
 {
-    [Area("AdminPanel")]
-    [Authorize]
-    public class ProductController : Controller
+    
+    public class ProductController : AdminBaseController
     {
         #region Ctor
 
-        private readonly IDashboardService _Service;
+        private readonly IHotelService _Service;
         private readonly INotyfService _toast;
 
-        public ProductController(IDashboardService boardService, INotyfService toast)
+        public ProductController(IHotelService service, INotyfService toast)
         {
-            _Service = boardService;
+            _Service = service;
             _toast = toast;
         }
 
         #endregion
+
         public IActionResult ShowAllHotels()
         {
             return View(_Service.GetAllHotel());
@@ -45,8 +45,7 @@ namespace Hotel.Areas.AdminPanel.Controllers
                 try
                 {
                     _Service.CreateHotel(model);
-
-                    _toast.Success("هتل با موفقیت ثبت شد");
+                    _toast.Success("عملیات با موفقیت انجام شد");
                     return RedirectToAction("ShowAllHotels");
                 }
                 catch (Exception e)
@@ -67,20 +66,24 @@ namespace Hotel.Areas.AdminPanel.Controllers
 
         #region Edit Hotel
 
-        public IActionResult EditHotel(int id, Domain.Entities.Product.Hotel hotel, HotelAddress address,string a)
+        public IActionResult EditHotel(int id)
         {
-            var edit = _Service.EditHotelById(id, hotel, address);
-            return View(edit);
+            var hotel = _Service.GetHotelById(id);
+            return View(hotel);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult EditHotel(int id, Domain.Entities.Product.Hotel hotel, HotelAddress hotelAddress)
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult EditHotel(EditHotelDTO hotel)
         {
-            _Service.UpdateHotel(hotel);
-            _Service.UpdateAddress(hotelAddress);
-            return RedirectToAction("ShowAllHotels");
+            if (ModelState.IsValid)
+            {
+                _Service.UpdateHotel(hotel);
+                _toast.Success("تغییرات با موفقیت انجام شد");
+                return RedirectToAction("ShowAllHotels");
+            }
+            return View(hotel);
         }
-
+        
         #endregion
 
 

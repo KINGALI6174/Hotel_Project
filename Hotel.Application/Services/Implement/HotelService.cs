@@ -5,10 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Hotel.Application.DTOs.AdminSide.Product;
+using Hotel.Application.DTOs.SiteSide.UserLogin;
+using Hotel.Application.DTOs.SiteSide.UserRegister;
+using Hotel.Application.Security;
 using Hotel.Application.Services.Interface;
+using Hotel.Domain.Entities.Account;
 using Hotel.Domain.Entities.Product;
 using Hotel.Domain.RepositoryInterface;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Hotel = Hotel.Domain.Entities.Product.Hotel;
 
 namespace Hotel.Application.Services.Implement
 {
@@ -16,66 +21,74 @@ namespace Hotel.Application.Services.Implement
     {
         #region Ctor
 
-        
-        private readonly IHotelRepository _Service;
+        private readonly INotyfService _notyf;
+        private readonly IHotelRepository _ServiceRepo;
+       
 
-        public HotelService (INotyfService toast, IHotelRepository service)
+        public HotelService(INotyfService notyf, IHotelRepository service)
         {
-            _Service = service;
+            _notyf = notyf;
+            _ServiceRepo = service;
         }
-        
 
         #endregion
 
         public IEnumerable<Domain.Entities.Product.Hotel> GetAllHotel()
         {
-           return _Service.GetAllHotel();
+            return _ServiceRepo.GetAllHotel();
         }
 
-        public void AddHotel(Domain.Entities.Product.Hotel hotel)
+        public void CreateHotel(CreateHotelDTO model)
         {
-            _Service.AddHotel(hotel);
-        }
-
-        public void InsetAddress(HotelAddress address)
-        {
-            _Service.InsetAddress(address);
-        }
-
-        public void UpdateHotel(Domain.Entities.Product.Hotel hotel)
-        {
-            _Service.UpdateHotel(hotel);
-        }
-
-        public void UpdateAddress(HotelAddress address)
-        {
-            _Service.UpdateAddress(address);
-        }
-
-        public Domain.Entities.Product.Hotel GetHotelById(int id)
-        {
-            return _Service.GetHotelById(id);
-        }
-
-        public EditHotelDTO EditHotelById(int id, Domain.Entities.Product.Hotel hotel, HotelAddress address)
-        {
-            hotel = _Service.GetHotelById(id);
-            address = _Service.GetHotelAddress(id);
-            var edithoteldto = new EditHotelDTO()
+            var hotel = new Domain.Entities.Product.Hotel()
             {
-                ID = hotel.ID,
+                Title = model.Title,
+                Description = model.Description,
+                RoomCount = model.RoomCount,
+                StageCount = model.StageCount,
+                EntryTime = model.EntryTime,
+                ExitTime = model.ExitTime,
+                DateTime = DateTime.Now,
+                Address = model.Address,
+                City = model.City,
+                State = model.State,
+            };
+            _ServiceRepo.CreateHotel(hotel);
+        }
+
+        public void UpdateHotel(EditHotelDTO hotel)
+        {
+            var hotell = new Domain.Entities.Product.Hotel()
+            {
                 Title = hotel.Title,
                 Description = hotel.Description,
-                EntryTime = hotel.EntryTime,
-                ExitTime = hotel.ExitTime,
-                IsActive = hotel.IsActive,
                 RoomCount = hotel.RoomCount,
                 StageCount = hotel.StageCount,
-                Address = address.Address,
-                City = address.City,
-                State = address.State,
+                EntryTime = hotel.EntryTime,
+                ExitTime = hotel.ExitTime,
+                Address = hotel.Address,
+                City = hotel.City,
+                State = hotel.State,
             };
-            return edithoteldto;
+            _ServiceRepo.UpdateHotel(hotell);
+        }
+
+        public EditHotelDTO GetHotelById(int id)
+        {
+            var hotel = _ServiceRepo.GetHotelById(id);
+            var hotelDTO = new EditHotelDTO()
+            {
+                Title = hotel.Title,
+                Description = hotel.Description,
+                RoomCount = hotel.RoomCount,
+                StageCount = hotel.StageCount,
+                EntryTime = hotel.EntryTime,
+                ExitTime = hotel.ExitTime,
+                Address = hotel.Address,
+                City = hotel.City,
+                State = hotel.State,
+            };
+            return hotelDTO;
         }
 
     }

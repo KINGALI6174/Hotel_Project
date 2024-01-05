@@ -7,6 +7,7 @@ using Elfie.Serialization;
 using Hotel.Domain.Entities;
 using Hotel.Domain.Entities.Account;
 using Hotel.Domain.Entities.Product;
+using Hotel.Domain.Entities.Role;
 using Hotel.Domain.Entities.Web;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
@@ -33,18 +34,29 @@ namespace Hotel.Infrastructuer.DbContext
         public DbSet<FirstBaner> FirstBaners { get; set; }
         public DbSet<User> Users { get; set; }
 
+        #region Role
+
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserSelectedRole> UserSelectedRoles { get; set; }
+
+        #endregion
+
         #region product
 
         public DbSet<AdvantageRoom> AdvantageRooms { get; set; }
         public DbSet<AdvantageToRoom> AdvantageToRooms { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<HotelRule> HotelRules { get; set; }
-        public DbSet<HotelAddress> HotelAddresses { get; set; }
         public DbSet<HotelGallery> HotelGalleries { get; set; }
         public DbSet<Domain.Entities.Product.Hotel> Hotels { get; set; }
         public DbSet<ReserveRoom> ReserveRooms { get; set; }
 
+<<<<<<< HEAD
+        #endregion
+    }
+=======
     #endregion
   }
 
+>>>>>>> 78d1bb00570448618eee940fe6a62a33cdf6cd4b
 }
